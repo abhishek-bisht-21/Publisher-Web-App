@@ -53,7 +53,6 @@ export const loginUserCtrl = async (req, res) => {
       status: "success",
       message: "User logged in successfully",
       userFound,
-      token: generateToken(userFound?._id),
     });
   } else {
     throw new Error("Invalid login credentials");
