@@ -43,10 +43,24 @@ export const getProductsCtrl = asyncHandler(async (req, res) => {
 	let productQuery = Product.find()
 
 
-	//search by name
+	//filter by name
 	if (req.query.name) {
 		productQuery = productQuery.find({
 			name: { $regex: req.query.name, $options: "i" },
+		});
+	}
+
+	//filter by brand
+	if (req.query.brand) {
+		productQuery = productQuery.find({
+			brand: { $regex: req.query.brand, $options: "i" },
+		});
+	}
+
+	//filter by category
+	if (req.query.brand) {
+		productQuery = productQuery.find({
+			category: { $regex: req.query.category, $options: "i" },
 		});
 	}
 
