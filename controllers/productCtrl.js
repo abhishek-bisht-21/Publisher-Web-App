@@ -108,6 +108,10 @@ export const getProductsCtrl = asyncHandler(async (req, res) => {
 
 	res.json({
 		status: "Success",
+		total,
+		results: products.length,
+		pagination,
+		message: "products fetched successfully",
 		products
 	})
 })
