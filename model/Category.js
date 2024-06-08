@@ -15,6 +15,7 @@ const CategorySchema = new Schema(
     },
     image: {
       type: String,
+      default: "https://images.pexels.com/photos/23733220/pexels-photo-23733220/free-photo-of-a-black-and-white-photo-of-a-person-walking-through-an-empty-building.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
       required: true,
     },
     products: [
