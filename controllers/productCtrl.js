@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import Product from "../model/Product.js";
 import Category from "../model/Category.js";
+import Brand from "../model/Brand.js";
 
 
 // @desc    Create new product
@@ -26,6 +27,17 @@ export const createProductCtrl = asyncHandler(async (req, res) => {
 		);
 	}
 
+	//find the brand
+	const brandFound = await Brand.findOne({
+		name: "addidas",
+	});
+
+	if (!brandFound) {
+		throw new Error(
+			"Brand not found, please create brand first or check brand name"
+		);
+	}
+
 	//create the product
 	const product = await Product.create({
 		name,
@@ -41,7 +53,13 @@ export const createProductCtrl = asyncHandler(async (req, res) => {
 	categoryFound.products.push(product._id);
 	//resave
 	await categoryFound.save();
-	
+	//push the product into brand
+	brandFound.products.push(product._id);
+	//resave
+	await brandFound.save();
+
+
+
 	res.json({
 		status: "success",
 		message: "Product created successfully",
