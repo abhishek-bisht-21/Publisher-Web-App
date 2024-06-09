@@ -21,7 +21,16 @@ const ProductSchema = new Schema(
       ref: "Category",
       required: true,
     },
-    
+    sizes: {
+      type: [String],
+      enum: ["S", "M", "L", "XL", "XXL"],
+      required: true,
+    },
+    colors: {
+      type: [String],
+      required: true,
+    },
+
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

@@ -46,7 +46,9 @@ export const createProductCtrl = asyncHandler(async (req, res) => {
 		price,
 		user: req.userAuthId,
 		totalQty,
-		brand
+		brand,
+		sizes,
+		colors
 	})
 
 	//push the product into category
@@ -177,6 +179,8 @@ export const updateProductCtrl = asyncHandler(async (req, res) => {
 		price,
 		totalQty,
 		brand,
+		sizes,
+		colors
 	} = req.body;
 	//validation
 
@@ -191,6 +195,8 @@ export const updateProductCtrl = asyncHandler(async (req, res) => {
 			price,
 			totalQty,
 			brand,
+			sizes,
+			colors
 		},
 		{
 			new: true,
