@@ -139,7 +139,7 @@ export const getProductsCtrl = asyncHandler(async (req, res) => {
 	}
 
 	// await the query
-	const products = await productQuery;
+	const products = await productQuery.populate("reviews");
 
 	res.json({
 		status: "Success",
@@ -155,7 +155,7 @@ export const getProductsCtrl = asyncHandler(async (req, res) => {
 // @route   GET /api/products/:id
 // @access  Public
 export const getProductCtrl = asyncHandler(async (req, res) => {
-	const product = await Product.findById(req.params.id);
+	const product = await Product.findById(req.params.id).populate("reviews");
 
 	if (!product) {
 		throw new Error("Prouduct not found");
