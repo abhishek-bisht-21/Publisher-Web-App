@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import dotenv from "dotenv";
 dotenv.config();
-//import Stripe from "stripe";
+import Stripe from "stripe";
 import Order from "../model/Order.js";
 import Product from "../model/Product.js";
 import User from "../model/User.js";
@@ -11,7 +11,7 @@ import User from "../model/User.js";
 //@access private
 
 //stripe instance
-
+const stripe = new Stripe(process.env.STRIPE_KEY);
 
 export const createOrderCtrl = asyncHandler(async (req, res) => {
   // //get teh coupon
@@ -70,7 +70,7 @@ export const createOrderCtrl = asyncHandler(async (req, res) => {
   user.orders.push(order?._id);
   await user.save();
 
-  //make payment (stripe)
+   //make payment (stripe)
   //convert order items to have same structure that stripe need
   const convertedOrders = orderItems.map((item) => {
     return {
@@ -85,9 +85,18 @@ export const createOrderCtrl = asyncHandler(async (req, res) => {
       quantity: item?.qty,
     };
   });
-
+  const session = await stripe.checkout.sessions.create({
+    line_items: convertedOrders,
+    metadata: {
+      orderId: JSON.stringify(order?._id),
+    },
+    mode: "payment",
+    success_url: "http://localhost:3000/success",
+    cancel_url: "http://localhost:3000/cancel",
+  });
   res.send({ url: session.url });
 });
+
 
 //@desc get all orders
 //@route GET /api/v1/orders
