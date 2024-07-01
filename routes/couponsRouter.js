@@ -3,6 +3,8 @@ import {
   createCouponCtrl,
   getAllCouponsCtrl,
   getCouponCtrl,
+  updateCouponCtrl,
+  deleteCouponCtrl
 } from "../controllers/couponsCtrl.js";
 import isAdmin from "../middlewares/isAdmin.js";
 import { isLoggedIn } from "../middlewares/isLoggedIn.js";
