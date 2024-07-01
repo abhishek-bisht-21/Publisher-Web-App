@@ -71,3 +71,33 @@ export const getCouponCtrl = asyncHandler(async (req, res) => {
   });
 });
 
+export const updateCouponCtrl = asyncHandler(async (req, res) => {
+  const { code, startDate, endDate, discount } = req.body;
+  const coupon = await Coupon.findByIdAndUpdate(
+    req.params.id,
+    {
+      code: code?.toUpperCase(),
+      discount,
+      startDate,
+      endDate,
+    },
+    {
+      new: true,
+    }
+  );
+  res.json({
+    status: "success",
+    message: "Coupon updated successfully",
+    coupon,
+  });
+});
+
+export const deleteCouponCtrl = asyncHandler(async (req, res) => {
+  const coupon = await Coupon.findByIdAndDelete(req.params.id);
+  res.json({
+    status: "success",
+    message: "Coupon deleted successfully",
+    coupon,
+  });
+});
+
