@@ -11,6 +11,8 @@ export const createProductCtrl = asyncHandler(async (req, res) => {
 	console.log(req.body);
 	const { name, description, category, price, totalQty, brand,  sizes, colors } =
 		req.body;
+
+	const convertedImgs = req.files.map((file) => file?.path);
 	//Product exists
 	const productExists = await Product.findOne({ name });
 	if (productExists) {
@@ -48,7 +50,8 @@ export const createProductCtrl = asyncHandler(async (req, res) => {
 		totalQty,
 		brand,
 		sizes,
-		colors
+		colors,
+		images: convertedImgs,
 	})
 
 	//push the product into category
